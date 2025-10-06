@@ -1,5 +1,7 @@
 import StartUpCard from "@/components/StartUpCard";
 import SearchForm from "../../components/SearchForm";
+import { client } from "@/sanity/lib/client";
+import { STARTUPS_QUERY } from "@/sanity/lib/queries";
 
 export interface StartUpCardProps {
   _createAt: Date;
@@ -14,28 +16,8 @@ export interface StartUpCardProps {
 }
 export default async function Home({ searchParams }: { searchParams: Promise<{ query?: string }> }) {
   const query = (await searchParams).query;
-  const posts: StartUpCardProps[] = [{
-    _createAt: new Date(),
-    views: 55,
-    author: { _id: 1, name: 'Nebiyou' },
-    _id: 1,
-    description: "This is a description",
-    image: "https://m-cdn.phonearena.com/images/hub/508-wide-two_1200/iPhone-17-release-date-price-and-features.jpg",
-    category: "Robots",
-    title: "We Robots",
-    avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRNo_FCHCV8wiQIF3ZCsKwfe5WocmUvjo5OQ&s'
-  },
-  {
-    _createAt: new Date(),
-    views: 55,
-    author: { _id: 1, name: 'Nebiyou' },
-    _id: 2,
-    description: "This is a description",
-    image: "https://m-cdn.phonearena.com/images/hub/508-wide-two_1200/iPhone-17-release-date-price-and-features.jpg",
-    category: "Robots",
-    title: "We Robots",
-    avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRNo_FCHCV8wiQIF3ZCsKwfe5WocmUvjo5OQ&s'
-  }]
+
+  const posts = await client.fetch(STARTUPS_QUERY);
 
   return (
     <>
