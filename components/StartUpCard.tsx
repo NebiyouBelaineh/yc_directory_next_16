@@ -40,6 +40,7 @@ const StartUpCard = ({ post }: { key?: string, post: StartupTypeCard }) => {
       </div>
       <Link href={`/startup/${_id}`}>
         <p className='startup-card_desc'>{description}</p>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={image} alt="placeholder" className='startup-card_img' />
       </Link>
       <div className='flex-between gap-3 mt-5'>
