@@ -28,7 +28,8 @@ export const STARTUP_BY_ID_QUERY = defineQuery(`
     _id,
     name,
     image,
-    bio
+    bio,
+    username
   },
   views,
   description,
@@ -37,3 +38,10 @@ export const STARTUP_BY_ID_QUERY = defineQuery(`
   pitch
 }
   `);
+
+export const STARTUPS_VIEWS_BY_ID = defineQuery(
+  `*[_type == "startup" && _id == $id][0] {
+  _id,
+  views,
+  }`
+);
