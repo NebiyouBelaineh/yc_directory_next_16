@@ -1,11 +1,12 @@
+import { SearchParamsType } from './HomeContent';
 import { SearchFormPropsType } from './SearchForm';
 
-const SearchDescription = async ({ query }: SearchFormPropsType) => {
-  const q = query;
+const SearchDescription = async ({ searchParams }: SearchParamsType) => {
+  const { query } = await searchParams;
   return (
     <div>
       <p className="text-30-semibold">
-        {q ? `Search results for "${q}"` : 'All Startups'}
+        {query ? `Search results for "${query}"` : 'All Startups'}
       </p>
     </div>
   )
