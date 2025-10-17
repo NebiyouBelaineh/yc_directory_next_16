@@ -13,5 +13,8 @@ export function formatDate(date: string){
     day: 'numeric',
     year: 'numeric',
   })
+}
 
+export function formatViews(views: number | null | undefined) {
+  return views && views > 1 ? `${views}` + ` views`: `${views || 0}` + ' view'
 }
