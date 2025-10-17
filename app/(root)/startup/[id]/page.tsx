@@ -1,23 +1,31 @@
-import { sanityFetch } from '@/sanity/lib/live';
-import { STARTUP_BY_ID_QUERY } from '@/sanity/lib/queries';
-import React from 'react'
+import PostDescription from "@/components/PostDescription";
+import PostDetails from "@/components/PostDetails";
+import { Skeleton } from "@/components/ui/skeleton";
+import Views from "@/components/Views";
+import { Suspense } from "react";
 
-const Page = async ({ params }: {
-  params: Promise<{ id: string }>
-}) => {
-  const { id } = await params;
-  const startUpData = await sanityFetch({
-    query: STARTUP_BY_ID_QUERY,
-    params: { id }
-  });
-  const startup = startUpData.data;
+export const experimental_ppr = true;
+
+const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   return (
     <>
-      <h1 className='text-3xl'>Title: {startup?.title}</h1>
-      <h1 className='text-3xl'>Author: {startup?.author?.name}</h1>
-      <h1 className='text-3xl'>Author: {startup?.pitch}</h1>
+      <section className="pink_container !min-h-[230px]">
+        <Suspense fallback="loading details ....">
+          <PostDescription params={params} />
+        </Suspense>
+      </section>
+      <section className="section_container">
+        <Suspense fallback="loading post....">
+          <PostDetails params={params} />
+        </Suspense>
+        <hr className="divider" />
+        {/* TODO: Editor's Pick startups show here */}
+      </section>
+      <Suspense fallback={<Skeleton className="view_skeleton" />}>
+        <Views params={params} />
+      </Suspense>
     </>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;
