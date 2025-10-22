@@ -3,7 +3,7 @@ import { client } from "@/sanity/lib/client";
 import { STARTUP_BY_ID_QUERY } from "@/sanity/lib/queries";
 import { notFound } from "next/navigation";
 
-export const getPosts = async (params: Promise<{ id: string }>) => {
+export const getPost = async (params: Promise<{ id: string }>) => {
   const { id } = await params;
   const post = await client.fetch(STARTUP_BY_ID_QUERY, { id });
   return post;
@@ -14,7 +14,7 @@ const PostDescription = async ({
 }: {
   params: Promise<{ id: string }>;
 }) => {
-  const post = await getPosts(params);
+  const post = await getPost(params);
   if (!post) return notFound();
   return (
     <>

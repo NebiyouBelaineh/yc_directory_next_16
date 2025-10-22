@@ -5,6 +5,8 @@ import { sanityFetch, SanityLive } from '@/sanity/lib/live';
 import { STARTUPS_QUERY } from '@/sanity/lib/queries';
 
 const StartupCardsContainer = async ({ searchParams }: SearchParamsType) => {
+  // "use cache"
+
   const query = (await searchParams).query;
   const params = { search: query || null };
 

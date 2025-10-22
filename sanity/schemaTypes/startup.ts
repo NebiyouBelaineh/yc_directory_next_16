@@ -26,6 +26,7 @@ export const startup = defineType({
     defineField({
       name: "description",
       type: "text",
+      validation: (Rule) => Rule.max(300),
     }),
     defineField({
       name: "category",
@@ -45,6 +46,7 @@ export const startup = defineType({
     defineField({
       name: "views",
       type: "number",
+      initialValue: 0,
     }),
   ],
 });

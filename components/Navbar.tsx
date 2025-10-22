@@ -1,15 +1,12 @@
-import { Suspense } from "react"
-import NavbarContent from "./NavbarContent"
+import NavbarContent from "./NavbarContent";
 const Navbar = async () => {
   return (
     <>
-      <Suspense fallback='loading navbar content ...'>
-        <header className='px-5 py-3 bg-white shadow-xs font-work-sans'>
+      <header className="px-5 py-3 bg-white shadow-xs font-work-sans">
           <NavbarContent />
-        </header>
-      </Suspense>
+      </header>
     </>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

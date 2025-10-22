@@ -1,53 +1,22 @@
-import { auth, signIn, signOut } from '@/auth'
-import Image from 'next/image'
-import Link from 'next/link'
+import Image from "next/image";
+import Link from "next/link";
+import SessionComponent from "./SessionComponent";
+import { Suspense } from "react";
+import { Skeleton } from "./ui/skeleton";
 
-const NavbarContent = async () => {
-  const session = await auth();
+const NavbarContent = () => {
   return (
     <>
-      <nav className='flex justify-between items-center'>
+      <nav className="flex justify-between items-center">
         <Link href="/">
-          <Image src="/logo.png" alt='logo' width={144} height={30} />
+          <Image src="/logo.png" alt="logo" width={144} height={30} />
         </Link>
-        <div className='flex items-center gap-5 text-black'>
-          {
-            session && session.user ? (
-              <>
-                <Link href={"/startup/create"}>Create</Link>
-
-                {/* SignOut form action */}
-                <form action={async () => {
-                  "use server";
-                  await signOut({ redirectTo: "/" });
-                }}>
-                  <button type='submit'><span>Logout</span></button>
-                </form>
-                <Link href={`/user/${session?.id}`}>
-                  <span>{session?.user?.name}</span>
-                </Link>
-              </>
-            ) :
-              <>
-                {/* SignIn form action */}
-                <form action={async () => {
-                  "use server";
-                  await signIn('github');
-                }}>
-                  <button type='submit'><span>Login with Github</span></button>
-                </form>
-                <form action={async () => {
-                  "use server";
-                  await signIn('google');
-                }}>
-                  <button type='submit'><span>Login with Google</span></button>
-                </form>
-              </>
-          }
-        </div>
+        <Suspense fallback={<Skeleton className="w-[280px] h-[34px] bg-gray-300"/>}>
+          <SessionComponent />
+        </Suspense>
       </nav>
     </>
-  )
-}
+  );
+};
 
-export default NavbarContent
+export default NavbarContent;

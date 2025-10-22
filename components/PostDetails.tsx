@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import Link from "next/link";
-import { getPosts } from "./PostDescription";
+import { getPost } from "./PostDescription";
 import { notFound } from "next/navigation";
 import markdownit from "markdown-it";
 const PostDetails = async ({ params }: { params: Promise<{ id: string }> }) => {
-  const post = await getPosts(params);
+  const post = await getPost(params);
   if (!post) return notFound();
 
   const md = markdownit();
