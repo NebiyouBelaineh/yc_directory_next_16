@@ -1,6 +1,7 @@
 import PostDescription from "@/components/PostDescription";
 import PostDescriptionSkeleton from "@/components/PostDescriptionSkeleton";
 import PostDetails from "@/components/PostDetails";
+import { PostDetailsSkeleton } from "@/components/PostDetailsSkeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import Views from "@/components/Views";
 import { Suspense } from "react";
@@ -16,7 +17,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
         </section>
       </Suspense>
       <section className="section_container">
-        <Suspense fallback="loading post....">
+        <Suspense fallback={<PostDetailsSkeleton/>}>
           <PostDetails params={params} />
         </Suspense>
         <hr className="divider" />
