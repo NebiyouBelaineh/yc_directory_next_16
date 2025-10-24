@@ -107,7 +107,7 @@ layer(base);
 }
 
 @utility card_grid {
-  @apply grid md:grid-cols-3 sm:grid-cols-2 gap-5;
+  @apply grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5;
 }
 
 @utility card_grid-sm {
