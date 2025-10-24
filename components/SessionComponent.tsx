@@ -1,9 +1,13 @@
+import { auth, signIn, signOut } from "@/auth";
+import { Session } from "next-auth";
+import Link from "next/link";
 
-import { auth, signIn, signOut } from '@/auth'
-import Link from 'next/link';
-
+interface ExtendedSession extends Session {
+  id?: string;
+}
 const SessionComponent = async () => {
-  const session = await auth()
+  const session: ExtendedSession | null = await auth();
+  // console.log(`session: ${JSON.stringify(session, null, 2)}`);
   return (
     <>
       <div className="flex items-center gap-5 text-black">

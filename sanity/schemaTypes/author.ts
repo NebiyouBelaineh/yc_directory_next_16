@@ -7,39 +7,39 @@ export const author = defineType({
   icon: UserIcon,
   fields: [
     defineField({
-      name: 'id',// slug
-      type: 'number'
+      name: "id", // slug
+      type: "number",
     }),
-    
+
     defineField({
-      name: 'name',
-      type: 'string'
+      name: "name",
+      type: "string",
     }),
-    
+
     defineField({
-      name: 'username',
-      type: 'string'
+      name: "username",
+      type: "string",
     }),
-    
+
     defineField({
-      name: 'email',
-      type: 'string'
+      name: "email",
+      type: "string",
     }),
-    
+
     defineField({
-      name: 'image',
-      type: 'url'
+      name: "image",
+      type: "url",
     }),
-    
+
     defineField({
-      name: 'bio',
-      type: 'text'
+      name: "bio",
+      type: "text",
     }),
   ],
   // Select authors by name to preview them
   preview: {
     select: {
-      title: 'name'
-    }
-  }
+      title: "name",
+    },
+  },
 });

@@ -45,3 +45,26 @@ export const STARTUPS_VIEWS_BY_ID = defineQuery(
   views,
   }`
 );
+
+export const AUTHOR_BY_GITHUB_ID = defineQuery(
+  `*[_type == "author" && id == $id][0] {
+  _id,
+  id,
+  name,
+  username,
+  email,
+  image,
+  bio
+  }`
+);
+
+export const AUTHOR_BY_PROVIDER_ID = defineQuery(
+  `*[_type == "author" && provider == $provider && providerId == $providerId][0] {
+    _id,
+    name,
+    username,
+    email,
+    image,
+    bio
+  }`
+);
