@@ -2,10 +2,7 @@ import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import { client } from "./sanity/lib/client";
-import {
-  AUTHOR_BY_GITHUB_ID,
-  AUTHOR_BY_PROVIDER_ID,
-} from "./sanity/lib/queries";
+import { AUTHOR_BY_PROVIDER_ID } from "./sanity/lib/queries";
 import { writeCleint } from "./sanity/lib/write-client";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -15,7 +12,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       console.log(`account.provider: ${account?.provider}`);
       console.log(`account?.provider: ${account?.providerAccountId}`);
       const existingUser = await client
-        .withConfig({ useCdn: false })
+        // .withConfig({ useCdn: false })
         .fetch(AUTHOR_BY_PROVIDER_ID, {
           provider: account?.provider,
           providerId: account?.providerAccountId,
@@ -36,14 +33,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async jwt({ token, account, profile }) {
       if (account && profile) {
-        if (account.provider === "github") {
-          const user = await client
-            .withConfig({ useCdn: false })
-            .fetch(AUTHOR_BY_GITHUB_ID, {
-              id: profile.id,
-            });
-          token.id = user?._id;
-        }
+        const user = await client
+          // .withConfig({ useCdn: false })
+          .fetch(AUTHOR_BY_PROVIDER_ID, {
+            provider: account.provider,
+            providerId: account.providerAccountId,
+          });
+        token.id = user?._id;
       }
       return token;
     },
