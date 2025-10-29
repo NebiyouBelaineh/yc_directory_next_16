@@ -61,10 +61,13 @@ export const AUTHOR_BY_GITHUB_ID = defineQuery(
 export const AUTHOR_BY_PROVIDER_ID = defineQuery(
   `*[_type == "author" && provider == $provider && providerId == $providerId][0] {
     _id,
+    id,
     name,
     username,
     email,
     image,
-    bio
+    bio,
+    provider,
+    providerId
   }`
 );

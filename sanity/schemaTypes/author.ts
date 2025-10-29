@@ -35,6 +35,15 @@ export const author = defineType({
       name: "bio",
       type: "text",
     }),
+
+    defineField({
+      name: "provider",
+      type: "string",
+    }),
+    defineField({
+      name: "providerId",
+      type: "string",
+    }),
   ],
   // Select authors by name to preview them
   preview: {
