@@ -18,3 +18,8 @@ export function formatDate(date: string){
 export function formatViews(views: number | null | undefined) {
   return views && views > 1 ? `${views}` + ` views`: `${views || 0}` + ' view'
 }
+
+
+export function parseServerActionResponse<T>(response: T) {
+  return JSON.parse(JSON.stringify(response));
+}
