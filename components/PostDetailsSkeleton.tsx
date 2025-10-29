@@ -5,7 +5,7 @@ export function PostDetailsSkeleton() {
   return (
     <div className="w-full max-w-4xl mx-auto space-y-10">
       {/* Header image */}
-      <Skeleton className="bg-gray-300 w-full h-[400px] rounded-xl" />
+      {/* <Skeleton className="bg-gray-300 w-full h-[400px] rounded-xl" /> */}
 
       {/* Author section */}
       <div className="space-y-5 mt-10">

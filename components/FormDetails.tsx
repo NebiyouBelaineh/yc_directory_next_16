@@ -129,8 +129,8 @@ const FormDetails = ({ session }: { session: Session }) => {
               required
               placeholder="Startup Image URL"
             />
-            {errors?.image && (
-              <p className="startup-form_error">{errors.image}</p>
+            {errors?.link && (
+              <p className="startup-form_error">{errors.link}</p>
             )}
           </div>
           <div data-color-mode="light">
