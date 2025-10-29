@@ -9,10 +9,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [GitHub, Google],
   callbacks: {
     async signIn({ user: { name, email, image }, profile, account }) {
-      console.log(`account.provider: ${account?.provider}`);
-      console.log(`account?.provider: ${account?.providerAccountId}`);
       const existingUser = await client
-        // .withConfig({ useCdn: false })
+        .withConfig({ useCdn: false })
         .fetch(AUTHOR_BY_PROVIDER_ID, {
           provider: account?.provider,
           providerId: account?.providerAccountId,
@@ -27,6 +25,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           email,
           image,
           bio: profile?.bio || "",
+          provider: account?.provider,
+          providerId: account?.providerAccountId
         });
       }
       return true;
@@ -34,7 +34,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async jwt({ token, account, profile }) {
       if (account && profile) {
         const user = await client
-          // .withConfig({ useCdn: false })
           .fetch(AUTHOR_BY_PROVIDER_ID, {
             provider: account.provider,
             providerId: account.providerAccountId,
