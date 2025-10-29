@@ -11,7 +11,14 @@ const NavbarContent = () => {
         <Link href="/">
           <Image src="/logo.png" alt="logo" width={144} height={30} />
         </Link>
-        <Suspense fallback={<Skeleton className="w-[280px] h-[34px] bg-gray-300"/>}>
+        <Suspense
+          fallback={
+            <div className="flex space-x-2">
+              <Skeleton className="w-[145px] h-[34px] bg-gray-300" />
+              <Skeleton className="w-[145px] h-[34px] bg-gray-300" />
+            </div>
+          }
+        >
           <SessionComponent />
         </Suspense>
       </nav>
