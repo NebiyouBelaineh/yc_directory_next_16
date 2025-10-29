@@ -2,7 +2,6 @@ import { formatDate } from '@/lib/utils'
 import { EyeIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
 import { Button } from './ui/button'
 import { Author, Startup } from '@/sanity/types'
 
@@ -41,7 +40,7 @@ const StartUpCard = ({ post }: { key?: string, post: StartupTypeCard }) => {
       <Link href={`/startup/${_id}`}>
         <p className='startup-card_desc'>{description}</p>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={image} alt="placeholder" className='startup-card_img' />
+        <img src={image} alt="startup-pitch-img" className='startup-card_img' />
       </Link>
       <div className='flex-between gap-3 mt-5'>
         <Link href={`/?query=${category?.toLowerCase()}`}>
