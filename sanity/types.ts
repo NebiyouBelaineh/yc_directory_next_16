@@ -46,6 +46,8 @@ export type Author = {
   email?: string;
   image?: string;
   bio?: string;
+  provider?: string;
+  providerId?: string;
 };
 
 export type Markdown = string;
@@ -235,6 +237,53 @@ export type STARTUPS_VIEWS_BY_IDResult = {
   _id: string;
   views: number | null;
 } | null;
+// Variable: AUTHOR_BY_USER_ID
+// Query: *[_type == "author" && _id == $id][0] {  _id,  id,  name,  username,  email,  image,  bio  }
+export type AUTHOR_BY_USER_IDResult = {
+  _id: string;
+  id: number | null;
+  name: string | null;
+  username: string | null;
+  email: string | null;
+  image: string | null;
+  bio: string | null;
+} | null;
+// Variable: AUTHOR_BY_PROVIDER_ID
+// Query: *[_type == "author" && provider == $provider && providerId == $providerId][0] {    _id,    id,    name,    username,    email,    image,    bio,    provider,    providerId  }
+export type AUTHOR_BY_PROVIDER_IDResult = {
+  _id: string;
+  id: number | null;
+  name: string | null;
+  username: string | null;
+  email: string | null;
+  image: string | null;
+  bio: string | null;
+  provider: string | null;
+  providerId: string | null;
+} | null;
+// Variable: STARTUPS_BY_AUTHOR_ID
+// Query: *[_type == "startup" && author.ref == $id] {  _id,  title,  slug,  _createdAt,  author -> {    _id,    name,    image,    bio,    username  },  views,  description,  category,  image,  pitch,  _type,  _updatedAt,  _rev}
+export type STARTUPS_BY_AUTHOR_IDResult = Array<{
+  _id: string;
+  title: string | null;
+  slug: Slug | null;
+  _createdAt: string;
+  author: {
+    _id: string;
+    name: string | null;
+    image: string | null;
+    bio: string | null;
+    username: string | null;
+  } | null;
+  views: number | null;
+  description: string | null;
+  category: string | null;
+  image: string | null;
+  pitch: string | null;
+  _type: "startup";
+  _updatedAt: string;
+  _rev: string;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -243,5 +292,8 @@ declare module "@sanity/client" {
     "*[_type == \"startup\" && defined(slug.current) && !defined($search) || category match $search || title match $search || author->name match $search ] | order(_createdAt desc) {\n  _id,\n  title,\n  slug,\n  _createdAt,\n  author -> {\n    _id,\n    name,\n    image,\n    bio\n  },\n  views,\n  description,\n  category,\n  image\n}": STARTUPS_QUERYResult;
     "\n  *[_type == \"startup\" && _id == $id][0] {\n  _id,\n  title,\n  slug,\n  _createdAt,\n  author -> {\n    _id,\n    name,\n    image,\n    bio,\n    username\n  },\n  views,\n  description,\n  category,\n  image,\n  pitch\n}\n  ": STARTUP_BY_ID_QUERYResult;
     "*[_type == \"startup\" && _id == $id][0] {\n  _id,\n  views,\n  }": STARTUPS_VIEWS_BY_IDResult;
+    "*[_type == \"author\" && _id == $id][0] {\n  _id,\n  id,\n  name,\n  username,\n  email,\n  image,\n  bio\n  }": AUTHOR_BY_USER_IDResult;
+    "*[_type == \"author\" && provider == $provider && providerId == $providerId][0] {\n    _id,\n    id,\n    name,\n    username,\n    email,\n    image,\n    bio,\n    provider,\n    providerId\n  }": AUTHOR_BY_PROVIDER_IDResult;
+    "\n  *[_type == \"startup\" && author.ref == $id] {\n  _id,\n  title,\n  slug,\n  _createdAt,\n  author -> {\n    _id,\n    name,\n    image,\n    bio,\n    username\n  },\n  views,\n  description,\n  category,\n  image,\n  pitch,\n  _type,\n  _updatedAt,\n  _rev\n}\n  ": STARTUPS_BY_AUTHOR_IDResult;
   }
 }
