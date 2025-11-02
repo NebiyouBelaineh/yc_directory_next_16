@@ -6,7 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Views from "@/components/Views";
 import { Suspense } from "react";
 
-export const experimental_ppr = true;
+// export const experimental_ppr = true;
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   return (
