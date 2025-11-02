@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 // export const dynamic = "force-dynamic";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 class SentryExampleAPIError extends Error {
   constructor(message: string | undefined) {
     super(message);
@@ -9,6 +10,6 @@ class SentryExampleAPIError extends Error {
 }
 // A faulty API route to test Sentry's error monitoring
 export function GET() {
-  throw new SentryExampleAPIError("This error is raised on the backend called by the example page.");
+  // throw new SentryExampleAPIError("This error is raised on the backend called by the example page.");
   return NextResponse.json({ data: "Testing Sentry Error..." });
 }

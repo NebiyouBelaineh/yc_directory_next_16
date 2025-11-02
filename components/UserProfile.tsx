@@ -3,6 +3,7 @@ import { AUTHOR_BY_USER_ID, STARTUPS_BY_AUTHOR_ID } from "@/sanity/lib/queries";
 import Image from "next/image";
 import StartUpCard, { StartupTypeCard } from "./StartUpCard";
 import { auth } from "@/auth";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 
 const UserProfile = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
@@ -11,7 +12,10 @@ const UserProfile = async ({ params }: { params: Promise<{ id: string }> }) => {
   const user = await client.fetch(AUTHOR_BY_USER_ID, {
     id,
   });
-  const startups = await client.fetch(STARTUPS_BY_AUTHOR_ID, { id });
+  const startups = await sanityFetch({
+    query: STARTUPS_BY_AUTHOR_ID,
+    params: { id },
+  });
   // console.log(`startups: ${JSON.stringify(startups, null, 2)}`);
   return (
     <>
@@ -39,11 +43,12 @@ const UserProfile = async ({ params }: { params: Promise<{ id: string }> }) => {
             {(session?.id === user?._id ? "Your" : "All") + " Startups"}
           </p>
           <ul className="card_grid-sm">
-            {startups.map((s: StartupTypeCard) => (
-              <StartUpCard post={s} key={s._id} />
+            {startups.data.map((s) => (
+              <StartUpCard post={s as StartupTypeCard} key={s._id} />
             ))}
           </ul>
         </div>
+        <SanityLive/>
       </section>
     </>
   );
