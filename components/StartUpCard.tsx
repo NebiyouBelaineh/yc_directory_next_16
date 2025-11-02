@@ -41,7 +41,7 @@ const StartUpCard = ({ post }: { post: StartupTypeCard }) => {
           <Image
             className="rounded-full"
             src={author?.image || "https://placehold.co/600x600"}
-            alt="author-img"
+            alt="avatar"
             width={48}
             height={48}
           />
