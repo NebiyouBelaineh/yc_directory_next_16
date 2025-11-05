@@ -1,5 +1,6 @@
 import { auth, signIn, signOut } from "@/auth";
 import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 const SessionComponent = async () => {
   const session = await auth();
@@ -24,7 +25,12 @@ const SessionComponent = async () => {
               </button>
             </form>
             <Link href={`/user/${session?.id}`}>
-              <span>{session?.user?.name}</span>
+              <Avatar className="avatar">
+                <AvatarImage src={session?.user?.image || undefined} />
+                <AvatarFallback>
+                  {session.user.name?.slice(0, 2).toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
             </Link>
           </>
         ) : (
