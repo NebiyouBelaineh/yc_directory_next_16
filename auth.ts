@@ -26,18 +26,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           image,
           bio: profile?.bio || "",
           provider: account?.provider,
-          providerId: account?.providerAccountId
+          providerId: account?.providerAccountId,
         });
       }
       return true;
     },
     async jwt({ token, account, profile }) {
       if (account && profile) {
-        const user = await client
-          .fetch(AUTHOR_BY_PROVIDER_ID, {
-            provider: account.provider,
-            providerId: account.providerAccountId,
-          });
+        const user = await client.fetch(AUTHOR_BY_PROVIDER_ID, {
+          provider: account.provider,
+          providerId: account.providerAccountId,
+        });
         token.id = user?._id;
       }
       return token;
