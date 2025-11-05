@@ -30,7 +30,7 @@ const UserProfile = async ({ params }: { params: Promise<{ id: string }> }) => {
             height={220}
             width={220}
             src={user?.image || "https://placehold.co/600x600"}
-            alt={(user?.name as string).replace(" ", "-")}
+            alt="avatar"
             className="profile_image"
           />
           <p className="text-30-extrabold mt-7 text-center">
