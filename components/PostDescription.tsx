@@ -1,26 +1,18 @@
 import { formatDate } from "@/lib/utils";
-import { client } from "@/sanity/lib/client";
-import { STARTUP_BY_ID_QUERY } from "@/sanity/lib/queries";
+import { STARTUP_BY_ID_QUERYResult } from "@/sanity/types";
 import { notFound } from "next/navigation";
 
-export const getPost = async (params: Promise<{ id: string }>) => {
-  const { id } = await params;
-  const post = await client.fetch(STARTUP_BY_ID_QUERY, { id });
-  return post;
-};
-
 const PostDescription = async ({
-  params,
+  startup,
 }: {
-  params: Promise<{ id: string }>;
+  startup: STARTUP_BY_ID_QUERYResult;
 }) => {
-  const post = await getPost(params);
-  if (!post) return notFound();
+  if (!startup) return notFound();
   return (
     <>
-      <p className="tag">{formatDate(post._createdAt)}</p>
-      <h1 className="heading">{post?.title}</h1>
-      <p className="sub-heading !max-w-5xl">{post.description}</p>
+      <p className="tag">{formatDate(startup._createdAt)}</p>
+      <h1 className="heading">{startup?.title}</h1>
+      <p className="sub-heading !max-w-5xl">{startup.description}</p>
     </>
   );
 };
