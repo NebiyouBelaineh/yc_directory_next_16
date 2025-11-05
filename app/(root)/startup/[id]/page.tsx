@@ -1,7 +1,5 @@
-import EditorsPick from "@/components/EditorsPick";
-import PostDescription from "@/components/PostDescription";
+
 import PostDescriptionSkeleton from "@/components/PostDescriptionSkeleton";
-import PostDetails from "@/components/PostDetails";
 import { PostDetailsSkeleton } from "@/components/PostDetailsSkeleton";
 import StartupDetails from "@/components/StartupDetails";
 import { Skeleton } from "@/components/ui/skeleton";
