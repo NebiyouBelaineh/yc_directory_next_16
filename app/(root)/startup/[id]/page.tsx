@@ -1,7 +1,9 @@
+import EditorsPick from "@/components/EditorsPick";
 import PostDescription from "@/components/PostDescription";
 import PostDescriptionSkeleton from "@/components/PostDescriptionSkeleton";
 import PostDetails from "@/components/PostDetails";
 import { PostDetailsSkeleton } from "@/components/PostDetailsSkeleton";
+import StartupDetails from "@/components/StartupDetails";
 import { Skeleton } from "@/components/ui/skeleton";
 import Views from "@/components/Views";
 import { Suspense } from "react";
@@ -11,18 +13,16 @@ import { Suspense } from "react";
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   return (
     <>
-      <Suspense fallback={<PostDescriptionSkeleton />}>
-        <section className="pink_container !min-h-[230px]">
-          <PostDescription params={params} />
-        </section>
+      <Suspense
+        fallback={
+          <div>
+            <PostDescriptionSkeleton />
+            <PostDetailsSkeleton />
+          </div>
+        }
+      >
+        <StartupDetails params={params} />
       </Suspense>
-      <section className="section_container">
-        <Suspense fallback={<PostDetailsSkeleton/>}>
-          <PostDetails params={params} />
-        </Suspense>
-        <hr className="divider" />
-        {/* TODO: Editor's Pick startups show here */}
-      </section>
       <Suspense fallback={<Skeleton className="view_skeleton" />}>
         <Views params={params} />
       </Suspense>
