@@ -5,6 +5,10 @@ import { Button } from "./ui/button";
 import type { buildFeedbackIntegration } from "/home/neba/personal-projects/learning/next-js/yc_directory/node_modules/@sentry/nextjs/node_modules/@sentry-internal/feedback/build/npm/types/core/integration";
 type FeedbackIntegration = ReturnType<typeof buildFeedbackIntegration>;
 
+type SentryWidget = {
+  removeFromDom: () => void;
+} | null | undefined;
+
 const FeedBackButton = () => {
   const [feedback, setFeedback] = useState<ReturnType<FeedbackIntegration>>();
   // Read `getFeedback` on the client only, to avoid hydration errors during server rendering
@@ -12,7 +16,7 @@ const FeedBackButton = () => {
     setFeedback(Sentry.getFeedback());
   }, []);
 
-  const [widget, setWidget] = useState<ActorComponent | undefined>();
+  const [widget, setWidget] = useState<SentryWidget>(null);
   return (
     <div className="rounded-2xl">
       <Button
