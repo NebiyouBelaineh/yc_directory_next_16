@@ -3,7 +3,7 @@
 import { auth } from "@/auth";
 import { parseServerActionResponse } from "./utils";
 import slugify from "slugify";
-import { writeCleint } from "@/sanity/lib/write-client";
+import { writeClient } from "@/sanity/lib/write-client";
 import React from "react";
 
 export const createPitch = async (
@@ -44,7 +44,7 @@ export const createPitch = async (
       pitch,
     };
     // console.log(`startup.author: ${JSON.stringify(startup.author, null, 2)}`);
-    const result = await writeCleint.create({
+    const result = await writeClient.create({
       _type: "startup",
       ...startup,
     });

@@ -3,7 +3,7 @@ import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import { client } from "./sanity/lib/client";
 import { AUTHOR_BY_PROVIDER_ID } from "./sanity/lib/queries";
-import { writeCleint } from "./sanity/lib/write-client";
+import { writeClient } from "./sanity/lib/write-client";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [GitHub, Google],
@@ -17,7 +17,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         });
       // create the user
       if (!existingUser) {
-        await writeCleint.create({
+        await writeClient.create({
           _type: "author",
           id: profile?.id,
           username: profile?.login,
