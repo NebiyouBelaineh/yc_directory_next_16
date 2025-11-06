@@ -5,11 +5,11 @@ import { client } from "@/sanity/lib/client";
 import {
   PLAYLIST_BY_SLUG_QUERY,
   STARTUP_BY_ID_QUERY,
+  STARTUPS_VIEWS_BY_ID,
 } from "@/sanity/lib/queries";
 import { StartupTypeCard } from "./StartUpCard";
 
-export const getPost = async (params: Promise<{ id: string }>) => {
-  const { id } = await params;
+export const getPost = async (id: string) => {
   const post = await client.fetch(STARTUP_BY_ID_QUERY, { id });
   return post;
 };
@@ -19,13 +19,15 @@ const StartupDetails = async ({
 }: {
   params: Promise<{ id: string }>;
 }) => {
+  const { id } = await params;
   // Fetching parallely
   // For playlist results, the "editor-picks" playlist record first needs to be created.
-  const [startup, result] = await Promise.all([
-    getPost(params),
+  const [startup, result, startupView] = await Promise.all([
+    getPost(id),
     client.fetch(PLAYLIST_BY_SLUG_QUERY, {
       slug: "editor-picks",
     }),
+    client.withConfig({ useCdn: false }).fetch(STARTUPS_VIEWS_BY_ID, { id }),
   ]);
   // const startup = await getPost(params);
   // const result = await client.fetch(PLAYLIST_BY_SLUG_QUERY, {
@@ -39,7 +41,7 @@ const StartupDetails = async ({
         <PostDescription startup={startup} />
       </section>
       <section className="section_container">
-        <PostDetails startup={startup} />
+        <PostDetails startup={startup} views={startupView} />
         <hr className="divider" />
         <EditorsPick post={editorsPick as unknown as StartupTypeCard[]} />
       </section>

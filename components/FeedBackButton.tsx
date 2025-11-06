@@ -23,7 +23,7 @@ const FeedBackButton = () => {
     <div className="rounded-2xl">
       <Button
         type="button"
-        className="bg-transparent hover:bg-transparent text-lg h-full"
+        className="bg-transparent hover:bg-transparent text-xl h-full"
         onClick={async () => {
           if (widget) {
             widget.removeFromDom();
@@ -36,11 +36,11 @@ const FeedBackButton = () => {
         {widget ? (
           <div>
             <p></p>
-            <span className="underline rounded hover:text-primary hover:cursor-pointer">Check right corner widget. Click to hide bug report widget.</span>
+            <span className="underline rounded hover:text-primary hover:cursor-pointer text-lg">Check the right corner widget. Click here to hide bug report widget.</span>
           </div>
         ) : (
           <div>
-            <span  className="underline rounded hover:text-primary hover:cursor-pointer">Want to report a bug?</span>
+            <span  className="underline rounded hover:text-primary hover:cursor-pointer">Want to report a bug? Click here.</span>
           </div>
         )}
       </Button>

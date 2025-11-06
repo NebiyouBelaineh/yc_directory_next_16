@@ -1,9 +1,6 @@
-
 import PostDescriptionSkeleton from "@/components/PostDescriptionSkeleton";
 import { PostDetailsSkeleton } from "@/components/PostDetailsSkeleton";
 import StartupDetails from "@/components/StartupDetails";
-import { Skeleton } from "@/components/ui/skeleton";
-import Views from "@/components/Views";
 import { Suspense } from "react";
 
 // export const experimental_ppr = true;
@@ -20,9 +17,6 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
         }
       >
         <StartupDetails params={params} />
-      </Suspense>
-      <Suspense fallback={<Skeleton className="view_skeleton" />}>
-        <Views params={params} />
       </Suspense>
     </>
   );

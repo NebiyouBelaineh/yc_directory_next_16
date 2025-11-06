@@ -3,10 +3,33 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import markdownit from "markdown-it";
-import { STARTUP_BY_ID_QUERYResult } from "@/sanity/types";
-const PostDetails = async ({ startup }: { startup: STARTUP_BY_ID_QUERYResult }) => {
+import {
+  STARTUP_BY_ID_QUERYResult,
+  STARTUPS_VIEWS_BY_IDResult,
+} from "@/sanity/types";
+import { Eye } from "lucide-react";
+import { after } from "next/server";
+import { writeClient } from "@/sanity/lib/write-client";
+const PostDetails = async ({
+  startup,
+  views,
+}: {
+  startup: STARTUP_BY_ID_QUERYResult;
+  views: STARTUPS_VIEWS_BY_IDResult;
+}) => {
   if (!startup) return notFound();
 
+  if (views) {
+    after(
+      async () =>
+        await writeClient
+          .patch(views?._id)
+          .set({
+            views: views && views.views ? views?.views + 1 : 1,
+          })
+          .commit()
+    );
+  }
   const md = markdownit();
   const parsedContent = md.render(startup.pitch || "");
   return (
@@ -32,7 +55,16 @@ const PostDetails = async ({ startup }: { startup: STARTUP_BY_ID_QUERYResult }) 
             <div className="flex flex-col leading-tight">
               <p className="text-20-medium">{startup.author?.name}</p>
               <p className="text-16-medium !text-black-300">
-                @{startup.author?.username || startup.author?.name?.replace(" ", "")}
+                @
+                {startup.author?.username ||
+                  startup.author?.name?.replace(" ", "")}
+              </p>
+            </div>
+            <div className="flex items-center gap-2 bg-primary-100 rounded-full p-2">
+              <Eye />
+              <p className="">
+                <span className="font-black"></span>
+                {`${views?.views}`}
               </p>
             </div>
           </Link>
