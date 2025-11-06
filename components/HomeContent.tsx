@@ -1,8 +1,9 @@
-import SearchForm from "./SearchForm";
+import SearchForm, { SearchFormSkeleton } from "./SearchForm";
 import SearchDescription from "@/components/SearchDescription";
 import { Suspense } from "react";
 import StartupCardsContainer from "./StartupCardsContainer";
 import StartupGridSkeleton from "./StartupGridSkeleton";
+import { Skeleton } from "./ui/skeleton";
 
 export type SearchParamsType = { searchParams: Promise<{ query?: string }> };
 const HomeContent = async ({ searchParams }: SearchParamsType) => {
@@ -15,12 +16,12 @@ const HomeContent = async ({ searchParams }: SearchParamsType) => {
         <p className="sub-heading !max-w-3xl">
           Submit Ideas, Vote on Pitches, and Get Noticed in Virtual Competitions
         </p>
-        <Suspense fallback="loading search form ...">
+        <Suspense fallback={<SearchFormSkeleton/>}>
           <SearchForm searchParams={searchParams} />
         </Suspense>
       </section>
       <section className="section_container">
-        <Suspense fallback="Loading Search descriptions ....">
+        <Suspense fallback={<Skeleton className="h-10 w-10"/>}>
           <SearchDescription searchParams={searchParams} />
         </Suspense>
         <Suspense fallback={<StartupGridSkeleton/>}>
