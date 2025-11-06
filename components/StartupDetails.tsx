@@ -19,10 +19,18 @@ const StartupDetails = async ({
 }: {
   params: Promise<{ id: string }>;
 }) => {
-  const startup = await getPost(params);
-  const result = await client.fetch(PLAYLIST_BY_SLUG_QUERY, {
-    slug: "editor-picks",
-  });
+  // Fetching parallely
+  // For playlist results, the "editor-picks" playlist record first needs to be created.
+  const [startup, result] = await Promise.all([
+    getPost(params),
+    client.fetch(PLAYLIST_BY_SLUG_QUERY, {
+      slug: "editor-picks",
+    }),
+  ]);
+  // const startup = await getPost(params);
+  // const result = await client.fetch(PLAYLIST_BY_SLUG_QUERY, {
+  //   slug: "editor-picks",
+  // });
   const editorsPick = result?.select;
 
   return (
@@ -33,7 +41,6 @@ const StartupDetails = async ({
       <section className="section_container">
         <PostDetails startup={startup} />
         <hr className="divider" />
-        {/* TODO: Editor's Pick startups show here */}
         <EditorsPick post={editorsPick as unknown as StartupTypeCard[]} />
       </section>
     </>

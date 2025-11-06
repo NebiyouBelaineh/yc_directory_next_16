@@ -1,5 +1,4 @@
 import { SearchParamsType } from './HomeContent';
-import { SearchFormPropsType } from './SearchForm';
 
 const SearchDescription = async ({ searchParams }: SearchParamsType) => {
   const { query } = await searchParams;
