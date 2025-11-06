@@ -21,7 +21,7 @@ This repository is a Next.js 16 + TypeScript application built as a startups dir
 ## Clone and install
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/NebiyouBelaineh/yc_directory_next_16
 cd yc_directory
 npm install
 ```
