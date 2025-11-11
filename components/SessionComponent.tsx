@@ -2,6 +2,7 @@ import { auth, signIn, signOut } from "@/auth";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { FaGithub, FaGoogle } from "react-icons/fa";
+import { IoCreate, IoLogOut } from "react-icons/io5";
 
 const SessionComponent = async () => {
   const session = await auth();
@@ -12,7 +13,9 @@ const SessionComponent = async () => {
         {session && session.user ? (
           // If user is signed in
           <>
-            <Link href={"/startup/create"}>Create</Link>
+            <Link href={"/startup/create"}>
+              <IoCreate />
+            </Link>
 
             {/* SignOut form action */}
             <form
@@ -22,7 +25,7 @@ const SessionComponent = async () => {
               }}
             >
               <button type="submit">
-                <span>Logout</span>
+                <IoLogOut />
               </button>
             </form>
             <Link href={`/user/${session?.id}`}>
@@ -38,24 +41,32 @@ const SessionComponent = async () => {
           // If user is NOT signed in
           <>
             {/* SignIn form action */}
-            <form className=""
+            <form
+              className=""
               action={async () => {
                 "use server";
                 await signIn("github");
               }}
             >
-              <button type="submit" className="hover: cursor-pointer hover:bg-secondary border-1 rounded-lg border-black-100 p-3">
-                <FaGithub/>
+              <button
+                type="submit"
+                className="hover: cursor-pointer hover:bg-secondary border-1 rounded-lg border-black-100 p-3"
+              >
+                <FaGithub />
               </button>
             </form>
-            <form className=""
+            <form
+              className=""
               action={async () => {
                 "use server";
                 await signIn("google");
               }}
             >
-              <button type="submit" className="hover: cursor-pointer hover:bg-secondary border-1 rounded-lg border-black-100 p-3">
-                <FaGoogle/>
+              <button
+                type="submit"
+                className="hover: cursor-pointer hover:bg-secondary border-1 rounded-lg border-black-100 p-3"
+              >
+                <FaGoogle />
               </button>
             </form>
           </>
