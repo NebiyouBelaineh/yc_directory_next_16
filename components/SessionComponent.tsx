@@ -44,7 +44,7 @@ const SessionComponent = async () => {
                 await signIn("github");
               }}
             >
-              <button type="submit" className="hover: cursor-pointer hover:bg-slate-200 border-1 rounded-lg border-black-100 p-3">
+              <button type="submit" className="hover: cursor-pointer hover:bg-secondary border-1 rounded-lg border-black-100 p-3">
                 <FaGithub/>
               </button>
             </form>
@@ -54,7 +54,7 @@ const SessionComponent = async () => {
                 await signIn("google");
               }}
             >
-              <button type="submit" className="hover: cursor-pointer hover:bg-slate-200 border-1 rounded-lg border-black-100 p-3">
+              <button type="submit" className="hover: cursor-pointer hover:bg-secondary border-1 rounded-lg border-black-100 p-3">
                 <FaGoogle/>
               </button>
             </form>

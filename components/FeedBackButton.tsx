@@ -3,7 +3,6 @@
 "use client";
 import * as Sentry from "@sentry/nextjs";
 import { useEffect, useState } from "react";
-import { Button } from "./ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { FaBug } from "react-icons/fa";
 // import type { buildFeedbackIntegration } from "/home/neba/personal-projects/learning/next-js/yc_directory/node_modules/@sentry/nextjs/node_modules/@sentry-internal/feedback/build/npm/types/core/integration";
@@ -28,10 +27,9 @@ const FeedBackButton = () => {
     <div className="">
       <Tooltip className="">
         <TooltipTrigger asChild>
-          <Button
+          <button
             type="button"
-            // variant={"secondary"}
-            className="bg-amber-500 hover:bg-amber-700 text-white"
+            className="hover:cursor-pointer bg-transparent hover:bg-secondary border-1 rounded-lg border-black-100 p-3"
             onClick={async () => {
               if (widget) {
                 widget.removeFromDom();
@@ -41,10 +39,10 @@ const FeedBackButton = () => {
               }
             }}
           >
-              <FaBug className="w-6 h-6 "/>
+            <FaBug className="" />
             {/* <div className="flex items-center justify-center bg-amber-300 h-10 w-10 rounded">
             </div> */}
-          </Button>
+          </button>
         </TooltipTrigger>
         <TooltipContent>
           {widget ? (
