@@ -25,7 +25,7 @@ const PostDetails = async ({
         await writeClient
           .patch(views?._id)
           .set({
-            views: views && views.views ? views?.views + 1 : 1,
+            views: (views && views.views )? views?.views + 1 : 1,
           })
           .commit()
     );
