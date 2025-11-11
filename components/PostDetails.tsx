@@ -25,7 +25,7 @@ const PostDetails = async ({
         await writeClient
           .patch(views?._id)
           .set({
-            views: (views && views.views )? views?.views + 1 : 1,
+            views: views && views.views ? views?.views + 1 : 1,
           })
           .commit()
     );
@@ -60,15 +60,17 @@ const PostDetails = async ({
                   startup.author?.name?.replace(" ", "")}
               </p>
             </div>
-            <div className="flex items-center gap-2 bg-primary-100 rounded-full p-2">
+          </Link>
+          <div className="grid grid-cols-1 items-center gap-2 p-2">
+            <div className="flex items-center justify-center gap-2 bg-primary-100 rounded-full">
               <Eye />
               <p className="">
                 <span className="font-black"></span>
                 {`${views?.views}`}
               </p>
             </div>
-          </Link>
-          <p className="category-tag">{startup.category}</p>
+            <p className="category-tag">{startup.category}</p>
+          </div>
         </div>
         <h3 className="text-30-bold">Pitch Details</h3>
         {parsedContent ? (
