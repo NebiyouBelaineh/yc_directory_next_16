@@ -38,15 +38,15 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function SearchFormSkeleton() {
   return (
-    <div className="bg-gray-500 search-form flex items-center gap-2">
+    <div className="bg-gray-300 search-form flex items-center gap-2">
       {/* Input skeleton */}
-      <Skeleton className="bg-gray-500  h-10 flex-1 rounded-md" />
+      <Skeleton className="bg-gray-300  h-10 flex-1 rounded-md" />
 
       {/* Buttons container */}
       <div className="flex gap-2">
-        <Skeleton className="bg-gray-500  h-10 w-10 rounded-md" />{" "}
+        <Skeleton className="bg-gray-300  h-10 w-10 rounded-md" />{" "}
         {/* Reset button */}
-        <Skeleton className=" bg-gray-500 h-10 w-10 rounded-md" />{" "}
+        <Skeleton className=" bg-gray-300 h-10 w-10 rounded-md" />{" "}
         {/* Search button */}
       </div>
     </div>
