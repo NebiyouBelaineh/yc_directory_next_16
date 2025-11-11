@@ -8,7 +8,7 @@ const SessionComponent = async () => {
   // console.log(`session: ${JSON.stringify(session, null, 2)}`);
   return (
     <>
-      <div className="flex items-center gap-5 text-black">
+      <div className="flex items-center gap-2 text-black">
         {session && session.user ? (
           // If user is signed in
           <>
@@ -44,7 +44,7 @@ const SessionComponent = async () => {
                 await signIn("github");
               }}
             >
-              <button type="submit" className="hover: cursor-pointer">
+              <button type="submit" className="hover: cursor-pointer hover:bg-slate-200 border-1 rounded-lg border-black-100 p-3">
                 <FaGithub/>
               </button>
             </form>
@@ -54,7 +54,7 @@ const SessionComponent = async () => {
                 await signIn("google");
               }}
             >
-              <button type="submit" className="hover: cursor-pointer">
+              <button type="submit" className="hover: cursor-pointer hover:bg-slate-200 border-1 rounded-lg border-black-100 p-3">
                 <FaGoogle/>
               </button>
             </form>
