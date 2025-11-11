@@ -1,6 +1,7 @@
 import { auth, signIn, signOut } from "@/auth";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 
 const SessionComponent = async () => {
   const session = await auth();
@@ -37,24 +38,24 @@ const SessionComponent = async () => {
           // If user is NOT signed in
           <>
             {/* SignIn form action */}
-            <form
+            <form className=""
               action={async () => {
                 "use server";
                 await signIn("github");
               }}
             >
-              <button type="submit">
-                <span>Login with Github</span>
+              <button type="submit" className="hover: cursor-pointer">
+                <FaGithub/>
               </button>
             </form>
-            <form
+            <form className=""
               action={async () => {
                 "use server";
                 await signIn("google");
               }}
             >
-              <button type="submit">
-                <span>Login with Google</span>
+              <button type="submit" className="hover: cursor-pointer">
+                <FaGoogle/>
               </button>
             </form>
           </>
