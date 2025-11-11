@@ -12,15 +12,8 @@ const NavbarContent = () => {
         <Link href="/">
           <Image src="/logo.png" alt="logo" width={144} height={30} />
         </Link>
-        <FeedBackButton/>
-        <Suspense
-          // fallback={
-          //   <div className="flex space-x-2">
-          //     <Skeleton className="w-[145px] h-[34px] bg-gray-300" />
-          //     <Skeleton className="w-[145px] h-[34px] bg-gray-300" />
-          //   </div>
-          // }
-        >
+        <FeedBackButton />
+        <Suspense>
           <SessionComponent />
         </Suspense>
       </nav>

@@ -25,13 +25,13 @@ const FeedBackButton = () => {
 
   const [widget, setWidget] = useState<SentryWidget>(null);
   return (
-    <div className="rounded-2xl">
-      <Tooltip className="bg-white">
+    <div className="">
+      <Tooltip className="">
         <TooltipTrigger asChild>
           <Button
             type="button"
-            variant={"outline"}
-            className="h-ful"
+            // variant={"secondary"}
+            className="bg-amber-500 hover:bg-amber-700 text-white"
             onClick={async () => {
               if (widget) {
                 widget.removeFromDom();
@@ -41,24 +41,26 @@ const FeedBackButton = () => {
               }
             }}
           >
-            <FaBug className={"border-black-100"}/>
+              <FaBug className="w-6 h-6 "/>
+            {/* <div className="flex items-center justify-center bg-amber-300 h-10 w-10 rounded">
+            </div> */}
           </Button>
         </TooltipTrigger>
         <TooltipContent>
           {widget ? (
-              <div>
-                <span className="hover:cursor-pointer bg-black text-white rounded p-1">
-                  Check the right corner widget. Click here to hide bug report
-                  widget.
-                </span>
-              </div>
-            ) : (
-              <div>
-                <span className="hover:cursor-pointer bg-black text-white rounded p-1">
-                  Want to report a bug? Click here.
-                </span>
-              </div>
-            )}
+            <div>
+              <span className="hover:cursor-pointer bg-black text-white rounded p-1">
+                Check the right corner widget. Click here to hide bug report
+                widget.
+              </span>
+            </div>
+          ) : (
+            <div>
+              <span className="hover:cursor-pointer bg-black text-white rounded p-1">
+                Want to report a bug? Click here.
+              </span>
+            </div>
+          )}
         </TooltipContent>
       </Tooltip>
     </div>
