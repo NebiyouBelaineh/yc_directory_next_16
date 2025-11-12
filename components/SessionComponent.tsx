@@ -1,121 +1,148 @@
 import { auth, signIn, signOut } from "@/auth";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { FaGithub, FaGoogle } from "react-icons/fa";
+import { FaGithub, FaGoogle, FaUserAlt } from "react-icons/fa";
 import { IoCreate, IoLogOut } from "react-icons/io5";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import FeedBackButton from "./FeedBackButton";
 
 const SessionComponent = async () => {
   const session = await auth();
-  // console.log(`session: ${JSON.stringify(session, null, 2)}`);
-  return (
-    <>
-      <div className="flex items-center gap-2 text-black">
-        {session && session.user ? (
-          // If user is signed in
-          <>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Link
-                  href={"/startup/create"}
-                  className="hover:bg-secondary border-1 rounded-lg border-black-100 p-3"
-                >
-                  <IoCreate />
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent>
-                <span className="hover:cursor-pointer bg-black text-white rounded p-1">
-                  Create Pitch
-                </span>
-              </TooltipContent>
-            </Tooltip>
 
-            {/* SignOut form action */}
+  return (
+    <div className="flex items-center gap-2 text-black">
+      {session && session.user ? (
+        <>
+          {/* --- Desktop View (lg and up) --- */}
+          <div className="hidden lg:flex items-center gap-2">
+            {/* Create pitch */}
+            <Link
+              href="/startup/create"
+              className="hover:bg-secondary border rounded-lg p-3 flex items-center gap-2"
+            >
+              <IoCreate /> Create Pitch
+            </Link>
+
+            {/* Logout */}
             <form
               action={async () => {
                 "use server";
                 await signOut({ redirectTo: "/" });
               }}
             >
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <button
-                    type="submit"
-                    className="hover: cursor-pointer hover:bg-secondary border-1 rounded-lg border-black-100 p-3"
-                  >
-                    <IoLogOut />
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <span className="hover:cursor-pointer bg-black text-white rounded p-1">
-                    Logout
-                  </span>
-                </TooltipContent>
-              </Tooltip>
+              <button
+                type="submit"
+                className="hover:bg-secondary border rounded-lg p-3 flex items-center gap-2"
+              >
+                <IoLogOut />
+                Logout
+              </button>
             </form>
-            <Link href={`/user/${session?.id}`}>
-              <Avatar className="avatar">
-                <AvatarImage src={session?.user?.image || undefined} />
-                <AvatarFallback>
-                  {session.user.name?.slice(0, 2).toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-            </Link>
-          </>
-        ) : (
-          // If user is NOT signed in
-          <>
-            {/* SignIn form action */}
-            <form
-              className=""
-              action={async () => {
-                "use server";
-                await signIn("github");
-              }}
+          </div>
+
+          {/* --- Mobile/Tablet View (md and smaller) --- */}
+          <div className="block">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Avatar className="cursor-pointer avatar">
+                  <AvatarImage src={session?.user?.image || undefined} />
+                  <AvatarFallback>
+                    {session.user.name?.slice(0, 2).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="end"
+                className="w-40 bg-primary-100 z-100"
+              >
+                <DropdownMenuItem asChild className="dropdown_border">
+                  <Link href={`/user/${session?.id}`}>
+                    <FaUserAlt /> Profile
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild className="dropdown_border lg:hidden">
+                  <Link
+                    href="/startup/create"
+                    className="flex items-center gap-2"
+                  >
+                    <IoCreate className="text-lg" /> Create Pitch
+                  </Link>
+                </DropdownMenuItem>
+
+                <DropdownMenuItem asChild className="dropdown_border lg:hidden">
+                  <form
+                    action={async () => {
+                      "use server";
+                      await signOut({ redirectTo: "/" });
+                    }}
+                  >
+                    <button
+                      type="submit"
+                      className="w-full text-left flex items-center gap-2"
+                    >
+                      <IoLogOut className="text-lg" /> Logout
+                    </button>
+                  </form>
+                </DropdownMenuItem>
+
+                <DropdownMenuItem asChild className="dropdown_border">
+                  <FeedBackButton />
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </>
+      ) : (
+        // --- If NOT signed in ---
+        <div className="flex gap-2">
+          <form
+            action={async () => {
+              "use server";
+              await signIn("github");
+            }}
+          >
+            <button
+              type="submit"
+              className="hover:bg-secondary border rounded-lg p-3 flex items-center gap-2 lg:hidden"
             >
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <button
-                    type="submit"
-                    className="hover: cursor-pointer hover:bg-secondary border-1 rounded-lg border-black-100 p-3"
-                  >
-                    <FaGithub />
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <span className="hover:cursor-pointer bg-black text-white rounded p-1">
-                    Login with Github
-                  </span>
-                </TooltipContent>
-              </Tooltip>
-            </form>
-            <form
-              className=""
-              action={async () => {
-                "use server";
-                await signIn("google");
-              }}
+              <FaGithub />
+            </button>
+            <button
+              type="submit"
+              className="hover:bg-secondary border rounded-lg p-3 hidden items-center gap-2 lg:flex"
             >
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <button
-                    type="submit"
-                    className="hover: cursor-pointer hover:bg-secondary border-1 rounded-lg border-black-100 p-3"
-                  >
-                    <FaGoogle />
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <span className="hover:cursor-pointer bg-black text-white rounded p-1">
-                    Login with Google
-                  </span>
-                </TooltipContent>
-              </Tooltip>
-            </form>
-          </>
-        )}
-      </div>
-    </>
+              Login with <FaGithub />
+            </button>
+          </form>
+
+          <form
+            action={async () => {
+              "use server";
+              await signIn("google");
+            }}
+          >
+            {/* for sm & md displays, hides "login with" text */}
+            <button
+              type="submit"
+              className="hover:bg-secondary border rounded-lg p-3 flex items-center gap-2 lg:hidden"
+            >
+              <FaGoogle />
+            </button>
+            <button
+              type="submit"
+              className="hover:bg-secondary border rounded-lg p-3 hidden items-center gap-2 lg:flex"
+            >
+              Login with <FaGoogle />
+            </button>
+          </form>
+        </div>
+      )}
+    </div>
   );
 };
 
