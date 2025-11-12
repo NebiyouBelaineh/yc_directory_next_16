@@ -14,9 +14,21 @@ const SessionComponent = async () => {
         {session && session.user ? (
           // If user is signed in
           <>
-            <Link href={"/startup/create"}>
-              <IoCreate />
-            </Link>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
+                  href={"/startup/create"}
+                  className="hover:bg-secondary border-1 rounded-lg border-black-100 p-3"
+                >
+                  <IoCreate />
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent>
+                <span className="hover:cursor-pointer bg-black text-white rounded p-1">
+                  Create Pitch
+                </span>
+              </TooltipContent>
+            </Tooltip>
 
             {/* SignOut form action */}
             <form
@@ -27,7 +39,10 @@ const SessionComponent = async () => {
             >
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <button type="submit">
+                  <button
+                    type="submit"
+                    className="hover: cursor-pointer hover:bg-secondary border-1 rounded-lg border-black-100 p-3"
+                  >
                     <IoLogOut />
                   </button>
                 </TooltipTrigger>
