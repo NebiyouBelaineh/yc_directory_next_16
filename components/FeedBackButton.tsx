@@ -3,7 +3,6 @@
 "use client";
 import * as Sentry from "@sentry/nextjs";
 import { useEffect, useState } from "react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { FaBug } from "react-icons/fa";
 // import type { buildFeedbackIntegration } from "/home/neba/personal-projects/learning/next-js/yc_directory/node_modules/@sentry/nextjs/node_modules/@sentry-internal/feedback/build/npm/types/core/integration";
 // type FeedbackIntegration = ReturnType<typeof buildFeedbackIntegration>;
@@ -18,50 +17,28 @@ type SentryWidget =
 const FeedBackButton = () => {
   const [feedback, setFeedback] = useState();
   // Read `getFeedback` on the client only, to avoid hydration errors during server rendering
+  const [widget, setWidget] = useState<SentryWidget>(null);
   useEffect(() => {
     setFeedback(Sentry.getFeedback());
   }, []);
 
-  const [widget, setWidget] = useState<SentryWidget>(null);
+  const handleClick = async () => {
+    if (widget) {
+      widget.removeFromDom();
+      setWidget(null);
+    } else {
+      setWidget(feedback?.createWidget());
+    }
+  };
   return (
-    <div className="">
-      <Tooltip className="">
-        <TooltipTrigger asChild>
-          <button
-            type="button"
-            className="hover:cursor-pointer bg-transparent hover:bg-secondary border-1 rounded-lg border-black-100 p-3"
-            onClick={async () => {
-              if (widget) {
-                widget.removeFromDom();
-                setWidget(null);
-              } else {
-                setWidget(feedback?.createWidget());
-              }
-            }}
-          >
-            <FaBug className="" />
-            {/* <div className="flex items-center justify-center bg-amber-300 h-10 w-10 rounded">
-            </div> */}
-          </button>
-        </TooltipTrigger>
-        <TooltipContent>
-          {widget ? (
-            <div>
-              <span className="hover:cursor-pointer bg-black text-white rounded p-1">
-                Check the right corner widget. Click here to hide bug report
-                widget.
-              </span>
-            </div>
-          ) : (
-            <div>
-              <span className="hover:cursor-pointer bg-black text-white rounded p-1">
-                Want to report a bug? Click here.
-              </span>
-            </div>
-          )}
-        </TooltipContent>
-      </Tooltip>
-    </div>
+    <button
+      type="button"
+      className="hover:bg-secondary items-center gap-2 text-sm w-full text-left px-2 py-1.5 rounded-sm flex transition"
+      onClick={handleClick}
+    >
+      <FaBug className="" />
+      {widget ? "Cancel report" : "Report bug"}
+    </button>
   );
 };
 
