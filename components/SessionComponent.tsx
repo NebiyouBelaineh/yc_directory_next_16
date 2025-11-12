@@ -23,7 +23,7 @@ const SessionComponent = async () => {
             {/* Create pitch */}
             <Link
               href="/startup/create"
-              className="hover:bg-secondary border rounded-lg p-3 flex items-center gap-2"
+              className="dropdown-menu_hover flex"
             >
               <IoCreate /> Create Pitch
             </Link>
@@ -37,7 +37,7 @@ const SessionComponent = async () => {
             >
               <button
                 type="submit"
-                className="hover:bg-secondary border rounded-lg p-3 flex items-center gap-2"
+                className="dropdown-menu_hover flex"
               >
                 <IoLogOut />
                 Logout
@@ -108,13 +108,13 @@ const SessionComponent = async () => {
           >
             <button
               type="submit"
-              className="hover:bg-secondary border rounded-lg p-3 flex items-center gap-2 lg:hidden"
+              className="dropdown-menu_hover flex lg:hidden"
             >
               <FaGithub />
             </button>
             <button
               type="submit"
-              className="hover:bg-secondary border rounded-lg p-3 hidden items-center gap-2 lg:flex"
+              className="dropdown-menu_hover hidden lg:flex"
             >
               Login with <FaGithub />
             </button>
@@ -129,13 +129,13 @@ const SessionComponent = async () => {
             {/* for sm & md displays, hides "login with" text */}
             <button
               type="submit"
-              className="hover:bg-secondary border rounded-lg p-3 flex items-center gap-2 lg:hidden"
+              className="dropdown-menu_hover flex lg:hidden"
             >
               <FaGoogle />
             </button>
             <button
               type="submit"
-              className="hover:bg-secondary border rounded-lg p-3 hidden items-center gap-2 lg:flex"
+              className="dropdown-menu_hover hidden lg:flex"
             >
               Login with <FaGoogle />
             </button>

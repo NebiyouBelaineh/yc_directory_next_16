@@ -146,11 +146,19 @@ layer(base);
 
 @utility avatar {
   /* navbar */
-  @apply p-0! focus-visible:ring-0! bg-none! rounded-full! drop-shadow-md!;
+  @apply p-0! focus-visible:ring-0! bg-none! rounded-full! drop-shadow-md! border-primary border-2;
 }
 
 @utility dropdown-menu {
   @apply w-56! border-[5px]! border-black! bg-white! p-5! rounded-2xl!;
+}
+
+@utility dropdown_border {
+  @apply text-black hover:bg-secondary border-b border-gray-200 last:border-b-0;
+}
+
+@utility dropdown-menu_hover {
+  @apply hover:bg-secondary border rounded-lg p-3 items-center gap-2;
 }
 
 @utility login {
