@@ -24,19 +24,6 @@ const SessionComponent = async () => {
             <Link href="/startup/create" className="navbar-menu_hover flex">
               <IoCreate /> Create Pitch
             </Link>
-
-            {/* Logout */}
-            <form
-              action={async () => {
-                "use server";
-                await signOut({ redirectTo: "/" });
-              }}
-            >
-              <button type="submit" className="navbar-menu_hover flex">
-                <IoLogOut />
-                Logout
-              </button>
-            </form>
           </div>
 
           {/* --- Mobile/Tablet View (md and smaller) --- */}
