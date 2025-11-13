@@ -9,7 +9,7 @@ export type SearchParamsType = { searchParams: Promise<{ query?: string }> };
 const HomeContent = async ({ searchParams }: SearchParamsType) => {
   return (
     <>
-      <section className="pink_container">
+      <section className="orange_container">
         <h1 className="heading">
           Pitch Your Startup, <br /> Connect with Entrepreneur
         </h1>
