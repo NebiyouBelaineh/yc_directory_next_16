@@ -9,8 +9,8 @@ import { Button } from "./ui/button";
 import { Send } from "lucide-react";
 import { formSchema } from "@/lib/validation";
 import { z } from "zod";
-import { toast, Toaster } from "sonner";
 import { createPitch } from "@/lib/actions";
+import { toast } from "sonner";
 
 const FormDetails = ({ session }: { session: Session }) => {
   const router = useRouter();
@@ -18,26 +18,25 @@ const FormDetails = ({ session }: { session: Session }) => {
   const [pitch, setPitch] = useState<string>("");
 
   const handleFormSubmission = async (prevState: any, formData: FormData) => {
+    const formValues = {
+      title: formData.get("title") as string,
+      description: formData.get("description") as string,
+      category: formData.get("category") as string,
+      link: formData.get("link") as string,
+      pitch, // being obtianed from the 'pitch' state, not the form
+    };
     try {
-      const formValues = {
-        title: formData.get("title") as string,
-        description: formData.get("description") as string,
-        category: formData.get("category") as string,
-        link: formData.get("link") as string,
-        pitch, // being obtianed from the 'pitch' state, not the form
-      };
-
+      // console.log(`formValues: ${JSON.stringify(formValues, null, 2)}`);
       await formSchema.parseAsync(formValues);
-      console.log(`formValues: ${JSON.stringify(formValues, null, 2)}`);
 
-      const res = await createPitch(prevState, formData, pitch);
+      const result = await createPitch(prevState, formData, pitch);
 
-      if (res.status === "SUCCESS") {
+      if (result.status === "SUCCESS") {
         toast.success("Your startup pitch has been created successfully.");
 
-        router.push(`/startup/${res._id}`);
+        router.push(`/startup/${result._id}`);
       }
-      return res;
+      return result;
     } catch (error) {
       if (error instanceof z.ZodError) {
         const fieldErrors = error.flatten().fieldErrors;
@@ -46,7 +45,7 @@ const FormDetails = ({ session }: { session: Session }) => {
           description: "Please check your inputs and try again.",
         });
         return {
-          ...prevState,
+          prevState: { ...formValues },
           error: "Validation failed",
           status: "ERROR",
         };
@@ -56,7 +55,7 @@ const FormDetails = ({ session }: { session: Session }) => {
         description: "An unexpected error has occured.",
       });
       return {
-        ...prevState,
+        prevState: { ...formValues },
         error: "An unexpected error has occured",
         status: "ERROR",
       };
@@ -66,11 +65,16 @@ const FormDetails = ({ session }: { session: Session }) => {
   const [state, formAction, isPending] = useActionState(handleFormSubmission, {
     error: "",
     status: "INITIAL",
+    prevState: {
+      title: "",
+      description: "",
+      category: "",
+      link: "",
+    },
   });
 
   return (
     <>
-      <Toaster richColors/>
       {session ? (
         <form action={formAction} className="startup-form">
           <div>
@@ -83,6 +87,7 @@ const FormDetails = ({ session }: { session: Session }) => {
               className="startup-form_input"
               required
               placeholder="Startup Title"
+              defaultValue={state.prevState?.title || ""}
             />
             {errors?.title && (
               <p className="startup-form_error">{errors.title}</p>
@@ -98,13 +103,14 @@ const FormDetails = ({ session }: { session: Session }) => {
               className="startup-form_textarea"
               required
               placeholder="Startup Description"
+              defaultValue={state.prevState?.description || ""}
             />
             {errors?.description && (
               <p className="startup-form_error">{errors.description}</p>
             )}
           </div>
           <div>
-            <label htmlFor="image" className="startup-form_label">
+            <label htmlFor="category" className="startup-form_label">
               category
             </label>
             <Input
@@ -113,6 +119,7 @@ const FormDetails = ({ session }: { session: Session }) => {
               className="startup-form_input"
               required
               placeholder="Startup category (EdTech, FinTech, MedTech...etc.)"
+              defaultValue={state.prevState?.category || ""}
             />
             {errors?.category && (
               <p className="startup-form_error">{errors.category}</p>
@@ -128,6 +135,7 @@ const FormDetails = ({ session }: { session: Session }) => {
               className="startup-form_input"
               required
               placeholder="Startup Image URL"
+              defaultValue={state.prevState?.link || ""}
             />
             {errors?.link && (
               <p className="startup-form_error">{errors.link}</p>
