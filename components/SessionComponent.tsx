@@ -21,10 +21,7 @@ const SessionComponent = async () => {
           {/* --- Desktop View (lg and up) --- */}
           <div className="hidden lg:flex items-center gap-2">
             {/* Create pitch */}
-            <Link
-              href="/startup/create"
-              className="dropdown-menu_hover flex"
-            >
+            <Link href="/startup/create" className="navbar-menu_hover flex">
               <IoCreate /> Create Pitch
             </Link>
 
@@ -35,10 +32,7 @@ const SessionComponent = async () => {
                 await signOut({ redirectTo: "/" });
               }}
             >
-              <button
-                type="submit"
-                className="dropdown-menu_hover flex"
-              >
+              <button type="submit" className="navbar-menu_hover flex">
                 <IoLogOut />
                 Logout
               </button>
@@ -56,15 +50,14 @@ const SessionComponent = async () => {
                   </AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                className="w-40 bg-primary-100 z-100"
-              >
+              <DropdownMenuContent align="end" className="dropdown-menu">
+                {/* Profile */}
                 <DropdownMenuItem asChild className="dropdown_border">
                   <Link href={`/user/${session?.id}`}>
                     <FaUserAlt /> Profile
                   </Link>
                 </DropdownMenuItem>
+                {/* Create pitch */}
                 <DropdownMenuItem asChild className="dropdown_border lg:hidden">
                   <Link
                     href="/startup/create"
@@ -73,22 +66,22 @@ const SessionComponent = async () => {
                     <IoCreate className="text-lg" /> Create Pitch
                   </Link>
                 </DropdownMenuItem>
-
-                <DropdownMenuItem asChild className="dropdown_border lg:hidden">
-                  <form
-                    action={async () => {
-                      "use server";
-                      await signOut({ redirectTo: "/" });
-                    }}
+                {/* Logout */}
+                <form
+                  action={async () => {
+                    "use server";
+                    await signOut({ redirectTo: "/" });
+                  }}
+                >
+                  <button
+                    type="submit"
+                    className="flex w-full items-center px-2 py-1.5 text-sm gap-2 dropdown_border rounded"
                   >
-                    <button
-                      type="submit"
-                      className="w-full text-left flex items-center gap-2"
-                    >
-                      <IoLogOut className="text-lg" /> Logout
-                    </button>
-                  </form>
-                </DropdownMenuItem>
+                    <IoLogOut className="text-lg" /> Logout
+                  </button>
+                </form>
+                {/* <DropdownMenuItem >
+                </DropdownMenuItem> */}
 
                 <DropdownMenuItem asChild className="dropdown_border">
                   <FeedBackButton />
@@ -100,26 +93,22 @@ const SessionComponent = async () => {
       ) : (
         // --- If NOT signed in ---
         <div className="flex gap-2">
+          {/* Sign in Github */}
           <form
             action={async () => {
               "use server";
               await signIn("github");
             }}
           >
-            <button
-              type="submit"
-              className="dropdown-menu_hover flex lg:hidden"
-            >
+            <button type="submit" className="navbar-menu_hover flex lg:hidden">
               <FaGithub />
             </button>
-            <button
-              type="submit"
-              className="dropdown-menu_hover hidden lg:flex"
-            >
+            <button type="submit" className="navbar-menu_hover hidden lg:flex">
               Login with <FaGithub />
             </button>
           </form>
 
+          {/* Sign in Google */}
           <form
             action={async () => {
               "use server";
@@ -127,16 +116,10 @@ const SessionComponent = async () => {
             }}
           >
             {/* for sm & md displays, hides "login with" text */}
-            <button
-              type="submit"
-              className="dropdown-menu_hover flex lg:hidden"
-            >
+            <button type="submit" className="navbar-menu_hover flex lg:hidden">
               <FaGoogle />
             </button>
-            <button
-              type="submit"
-              className="dropdown-menu_hover hidden lg:flex"
-            >
+            <button type="submit" className="navbar-menu_hover hidden lg:flex">
               Login with <FaGoogle />
             </button>
           </form>
