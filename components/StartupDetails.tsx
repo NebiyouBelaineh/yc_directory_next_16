@@ -8,6 +8,7 @@ import {
   STARTUPS_VIEWS_BY_ID,
 } from "@/sanity/lib/queries";
 import { StartupTypeCard } from "./StartUpCard";
+import { Suspense } from "react";
 
 export const getPost = async (id: string) => {
   const post = await client.fetch(STARTUP_BY_ID_QUERY, { id });
@@ -37,8 +38,10 @@ const StartupDetails = async ({
 
   return (
     <>
-      <section className="pink_container !min-h-[230px]">
-        <PostDescription startup={startup} />
+      <section className="orange_container !min-h-[230px]">
+        <Suspense>
+          <PostDescription startup={startup} />
+        </Suspense>
       </section>
       <section className="section_container">
         <PostDetails startup={startup} views={startupView} />

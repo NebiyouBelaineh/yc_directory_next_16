@@ -1,7 +1,7 @@
 "use client";
 import { Session } from "next-auth";
 import { Input } from "./ui/input";
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { Textarea } from "./ui/textarea";
 import { useRouter } from "next/navigation";
 import MDEditor from "@uiw/react-md-editor";
@@ -9,15 +9,31 @@ import { Button } from "./ui/button";
 import { Send } from "lucide-react";
 import { formSchema } from "@/lib/validation";
 import { z } from "zod";
-import { createPitch } from "@/lib/actions";
+import { createPitch, updatePitch } from "@/lib/actions";
 import { toast } from "sonner";
+import { STARTUP_BY_ID_QUERYResult } from "@/sanity/types";
 
-const FormDetails = ({ session }: { session: Session }) => {
+const FormDetails = ({
+  session,
+  startup,
+}: {
+  session: Session;
+  startup?: STARTUP_BY_ID_QUERYResult;
+}) => {
   const router = useRouter();
   const [errors, setErrors] = useState<Record<string, string>>();
-  const [pitch, setPitch] = useState<string>("");
+  const [pitch, setPitch] = useState<string>(startup?.pitch || "");
+  const [creatingPitch, setcreatingPitch] = useState<boolean>(true);
 
-  const handleFormSubmission = async (prevState: any, formData: FormData) => {
+  useEffect(() => {
+    // If there is a startup to update, set state to false, i.e updating mode
+    if (startup) setcreatingPitch(false);
+  }, [startup]);
+
+  const handleFormSubmission = async (
+    prevState: React.SetStateAction<Record<string, string>>,
+    formData: FormData
+  ) => {
     const formValues = {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
@@ -28,11 +44,18 @@ const FormDetails = ({ session }: { session: Session }) => {
     try {
       // console.log(`formValues: ${JSON.stringify(formValues, null, 2)}`);
       await formSchema.parseAsync(formValues);
+      let result;
 
-      const result = await createPitch(prevState, formData, pitch);
+      if (creatingPitch) {
+        result = await createPitch(prevState, formData, pitch);
+      } else if (startup?._id) {
+        result = await updatePitch(prevState, formData, pitch, startup._id);
+      }
 
       if (result.status === "SUCCESS") {
-        toast.success("Your startup pitch has been created successfully.");
+        toast.success(
+          `Your startup pitch has been ${creatingPitch ? "created" : "updated"} successfully.`
+        );
 
         router.push(`/startup/${result._id}`);
       }
@@ -87,7 +110,7 @@ const FormDetails = ({ session }: { session: Session }) => {
               className="startup-form_input"
               required
               placeholder="Startup Title"
-              defaultValue={state.prevState?.title || ""}
+              defaultValue={state.prevState?.title || startup?.title}
             />
             {errors?.title && (
               <p className="startup-form_error">{errors.title}</p>
@@ -103,7 +126,9 @@ const FormDetails = ({ session }: { session: Session }) => {
               className="startup-form_textarea"
               required
               placeholder="Startup Description"
-              defaultValue={state.prevState?.description || ""}
+              defaultValue={
+                state.prevState?.description || startup?.description
+              }
             />
             {errors?.description && (
               <p className="startup-form_error">{errors.description}</p>
@@ -119,7 +144,7 @@ const FormDetails = ({ session }: { session: Session }) => {
               className="startup-form_input"
               required
               placeholder="Startup category (EdTech, FinTech, MedTech...etc.)"
-              defaultValue={state.prevState?.category || ""}
+              defaultValue={state.prevState?.category || startup?.category}
             />
             {errors?.category && (
               <p className="startup-form_error">{errors.category}</p>
@@ -135,7 +160,7 @@ const FormDetails = ({ session }: { session: Session }) => {
               className="startup-form_input"
               required
               placeholder="Startup Image URL"
-              defaultValue={state.prevState?.link || ""}
+              defaultValue={state.prevState?.link || startup?.image}
             />
             {errors?.link && (
               <p className="startup-form_error">{errors.link}</p>
@@ -173,7 +198,13 @@ const FormDetails = ({ session }: { session: Session }) => {
             disabled={isPending}
             // onClick={() => toast.success('Submitted pitch.')}
           >
-            {isPending ? "Submitting... " : "Submit Your Pitch"}
+            {creatingPitch
+              ? isPending
+                ? "Submitting... "
+                : "Submit Your Pitch"
+              : isPending
+                ? "Updating... "
+                : "Update Your Pitch"}
             <Send className="size-6 ml-2" />
           </Button>
         </form>
