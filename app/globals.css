@@ -8,8 +8,8 @@ layer(base);
 @theme {
   --breakpoint-xs: 475px;
 
-  --color-primary-100: #ffe8f0;
-  --color-primary: #ee2b69;
+  --color-primary-100: #fde9e1;
+  --color-primary: #f0652f;
 
   --color-secondary: #fbe843;
 
@@ -29,7 +29,7 @@ layer(base);
 
   --shadow-100: 2px 2px 0px 0px rgb(0, 0, 0);
   --shadow-200: 2px 2px 0px 2px rgb(0, 0, 0);
-  --shadow-300: 2px 2px 0px 2px rgb(238, 43, 105);
+  --shadow-300: 2px 2px 0px 2px rgb(182, 119, 29);
 }
 
 /*
@@ -83,7 +83,7 @@ layer(base);
 }
 
 @utility text-14-normal {
-  @apply font-normal text-sm text-white-100/80;
+  @apply font-normal text-sm text-white;
 }
 
 @utility pink_container {
@@ -95,7 +95,7 @@ layer(base);
 }
 
 @utility heading {
-  @apply uppercase bg-black px-6 py-3 font-work-sans font-extrabold text-white sm:text-[54px] sm:leading-[64px] text-[36px] leading-[46px] max-w-5xl text-center my-5;
+  @apply uppercase bg-black px-6 py-3 font-work-sans font-extrabold text-white sm:text-[54px] sm:leading-[64px] text-[36px] leading-[46px] max-w-5xl text-center my-5 rounded-xl;
 }
 
 @utility sub-heading {
@@ -154,7 +154,7 @@ layer(base);
 }
 
 @utility dropdown_border {
-  @apply text-black hover:bg-secondary border-b border-gray-200 last:border-b-0;
+  @apply text-black hover:bg-secondary last:border-b-0;
 }
 
 @utility navbar-menu_hover {
