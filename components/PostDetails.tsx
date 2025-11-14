@@ -12,6 +12,7 @@ import { after } from "next/server";
 import { writeClient } from "@/sanity/lib/write-client";
 import { Tooltip, TooltipContent } from "./ui/tooltip";
 import { TooltipTrigger } from "@radix-ui/react-tooltip";
+import { auth } from "@/auth";
 const PostDetails = async ({
   startup,
   views,
@@ -32,6 +33,7 @@ const PostDetails = async ({
           .commit()
     );
   }
+  const session = await auth();
   const md = markdownit();
   const parsedContent = md.render(startup.pitch || "");
   return (
@@ -76,18 +78,20 @@ const PostDetails = async ({
         </div>
         <div className="flex items-center gap-2">
           <h3 className="text-30-bold">Pitch Details</h3>
-          <Tooltip>
-            <TooltipTrigger>
-              <Link href={`/startup/edit/${startup._id}`}>
-                <Edit className="text-green-700 hover:size-7" />
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p className="text-black border border-gray-700 font-bold p-2 bg-white-100 text-sm flex items-center rounded-2xl">
-                Edit your pitch
-              </p>
-            </TooltipContent>
-          </Tooltip>
+          {session && session.id === startup.author?._id && (
+            <Tooltip>
+              <TooltipTrigger>
+                <Link href={`/startup/edit/${startup._id}`}>
+                  <Edit className="text-green-700 hover:size-7" />
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="text-black border border-gray-700 font-bold p-2 bg-white-100 text-sm flex items-center rounded-2xl">
+                  Edit your pitch
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          )}
         </div>
         {parsedContent ? (
           <article
