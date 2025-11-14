@@ -68,7 +68,7 @@ const PostDetails = async ({
               <Eye />
               <p className="">
                 <span className="font-black"></span>
-                {`${views?.views}`}
+                {`${views?.views || 0}`}
               </p>
             </div>
             <p className="category-tag">{startup.category}</p>
