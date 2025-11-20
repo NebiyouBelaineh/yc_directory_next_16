@@ -73,7 +73,7 @@ export const AUTHOR_BY_PROVIDER_ID = defineQuery(
 );
 
 export const STARTUPS_BY_AUTHOR_ID = defineQuery(`
-  *[_type == "startup" && author._ref == $id] {
+  *[_type == "startup" && author._ref == $id] | order(_createdAt desc, views desc) {
   _id,
   title,
   slug,

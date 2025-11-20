@@ -6,7 +6,7 @@ layer(base);
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --breakpoint-xs: 475px;
+  --breakpoint-xs: 275px;
 
   --color-primary-100: #fde9e1;
   --color-primary: #f0652f;
