@@ -65,9 +65,9 @@ const PostDetails = async ({
               </p>
             </div>
           </Link>
-          <div className="flex flex-between sm:grid sm:grid-cols-1 items-center gap-2 p-2">
+          <div className="flex justify-between sm:grid sm:grid-cols-1 items-center gap-2 p-2">
             <div className="flex items-center justify-center gap-2">
-              <Eye className="text-primary rounded-full" />
+              <Eye className="text-primary" />
               <p>{`${views?.views || 0}`}</p>
             </div>
             <p className="category-tag">{startup.category}</p>
