@@ -289,7 +289,7 @@ export type AUTHOR_BY_PROVIDER_IDResult = {
   providerId: string | null;
 } | null;
 // Variable: STARTUPS_BY_AUTHOR_ID
-// Query: *[_type == "startup" && author._ref == $id] {  _id,  title,  slug,  _createdAt,  author -> {    _id,    name,    image,    bio,    username  },  views,  description,  category,  image,  pitch,  _type,  _updatedAt,  _rev}
+// Query: *[_type == "startup" && author._ref == $id] | order(_createdAt desc, views desc) {  _id,  title,  slug,  _createdAt,  author -> {    _id,    name,    image,    bio,    username  },  views,  description,  category,  image,  pitch,  _type,  _updatedAt,  _rev}
 export type STARTUPS_BY_AUTHOR_IDResult = Array<{
   _id: string;
   title: string | null;
@@ -346,7 +346,7 @@ declare module "@sanity/client" {
     "*[_type == \"startup\" && _id == $id][0] {\n  _id,\n  views,\n  }": STARTUPS_VIEWS_BY_IDResult;
     "*[_type == \"author\" && _id == $id][0] {\n  _id,\n  id,\n  name,\n  username,\n  email,\n  image,\n  bio\n  }": AUTHOR_BY_USER_IDResult;
     "*[_type == \"author\" && provider == $provider && providerId == $providerId][0] {\n    _id,\n    id,\n    name,\n    username,\n    email,\n    image,\n    bio,\n    provider,\n    providerId\n  }": AUTHOR_BY_PROVIDER_IDResult;
-    "\n  *[_type == \"startup\" && author._ref == $id] {\n  _id,\n  title,\n  slug,\n  _createdAt,\n  author -> {\n    _id,\n    name,\n    image,\n    bio,\n    username\n  },\n  views,\n  description,\n  category,\n  image,\n  pitch,\n  _type,\n  _updatedAt,\n  _rev\n}\n  ": STARTUPS_BY_AUTHOR_IDResult;
+    "\n  *[_type == \"startup\" && author._ref == $id] | order(_createdAt desc, views desc) {\n  _id,\n  title,\n  slug,\n  _createdAt,\n  author -> {\n    _id,\n    name,\n    image,\n    bio,\n    username\n  },\n  views,\n  description,\n  category,\n  image,\n  pitch,\n  _type,\n  _updatedAt,\n  _rev\n}\n  ": STARTUPS_BY_AUTHOR_IDResult;
     "*[_type == \"playlist\" && slug.current == $slug][0]{\n  _id,\n  title,\n  slug,\n  select[]->{\n    _id,\n    _createdAt,\n    title,\n    slug,\n    author->{\n      _id,\n      name,\n      slug,\n      image,\n      bio\n    },\n    views,\n    description,\n    category,\n    image,\n    pitch\n  }\n}": PLAYLIST_BY_SLUG_QUERYResult;
   }
 }
